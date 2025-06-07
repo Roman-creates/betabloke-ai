@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>betabloke.ai - Super Smart AI</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      margin: 0;
+      height: 100vh;
+    }
+    h1 {
+      color: #4ade80; /* bright green */
+    }
+    #chat {
+      width: 100%;
+      max-width: 600px;
+      border: 1px solid #4ade80;
+      border-radius: 8px;
+      padding: 1rem;
+      background: #1e1e1e;
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    .message {
+      margin-bottom: 1rem;
+    }
+    .user {
+      color: #60a5fa;
+      font-weight: bold;
+    }
+    .bot {
+      color: #4ade80;
+      font-weight: bold;
+    }
+    #input-area {
+      display: flex;
+      width: 100%;
+      max-width: 600px;
+    }
+    #user-input {
+      flex-grow: 1;
+      padding: 0.5rem;
+      border-radius: 4px 0 0 4px;
+      border: 1px solid #4ade80;
+      background: #121212;
+      color: #eee;
+      font-size: 1rem;
+      outline: none;
+    }
+    #send-btn {
+      padding: 0 1rem;
+      border: 1px solid #4ade80;
+      border-left: none;
+      border-radius: 0 4px 4px 0;
+      background: #4ade80;
+      color: #121212;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #send-btn:hover {
+      background: #22c55e;
+    }
+  </style>
+</head>
+<body>
+  <h1>betabloke.ai</h1>
+  <p>The super smart AI assistant, here to chat with you!</p>
+
+  <div id="chat"></div>
+
+  <div id="input-area">
+    <input id="user-input" type="text" placeholder="Ask betabloke.ai something..." />
+    <button id="send-btn">Send</button>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    // Dummy AI responses for now
+    const responses = {
+      "hello": "Hello! I'm betabloke.ai, your smart AI buddy!",
+      "how are you": "I'm just lines of code, but feeling ready to help you!",
+      "what's your name": "I'm betabloke.ai, your friendly AI assistant.",
+      "default": "That's interesting! Tell me more."
+    };
+
+    function addMessage(text, sender) {
+      const messageElem = document.createElement('div');
+      messageElem.classList.add('message', sender);
+      messageElem.textContent = text;
+      chat.appendChild(messageElem);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function getResponse(inputText) {
+      inputText = inputText.toLowerCase();
+      for (const key in responses) {
+        if (inputText.includes(key)) return responses[key];
+      }
+      return responses['default'];
+    }
+
+    function handleSend() {
+      const userText = input.value.trim();
+      if (!userText) return;
+      addMessage(userText, 'user');
+      input.value = '';
+
+      // Simulate thinking delay
+      setTimeout(() => {
+        const botReply = getResponse(userText);
+        addMessage(botReply, 'bot');
+      }, 700);
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleSend();
+    });
+  </script>
+</body>
+</html>
